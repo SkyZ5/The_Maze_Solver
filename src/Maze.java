@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Maze {
     private String[][] maze;
 
@@ -15,5 +18,9 @@ public class Maze {
             returnString += "\n";
         }
         return returnString;
+    }
+    public ArrayList<int[]> mazeTraversal(){
+        MazeTraversal mazeTraversal = new MazeTraversal(maze);
+        return mazeTraversal.getPositions();
     }
 }

@@ -9,6 +9,10 @@ public class Main {
         String[][] mazeList = getMaze("src/maze");
         Maze maze = new Maze(mazeList);
         System.out.println(maze);
+        ArrayList<int[]> positions = maze.mazeTraversal();
+        for(int[] list : positions){
+            System.out.println(Arrays.toString(list));
+        }
     }
     public static String[][] getMaze(String fileName) {
         File f = new File(fileName);
