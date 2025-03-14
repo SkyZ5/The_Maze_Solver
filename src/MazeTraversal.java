@@ -5,6 +5,7 @@ public class MazeTraversal {
     private String[][] maze;
     private int[] position = {0, 0};
     private ArrayList<int[]> positions = new ArrayList<int[]>();
+    private ArrayList<int[]> forks = new ArrayList<int[]>();
 
     public MazeTraversal(String[][] maze){
         this.maze = maze;
@@ -12,22 +13,33 @@ public class MazeTraversal {
 
     }
     private void move(){
+        int choices = 0;
+        boolean fork = false;
         if(moveLeft()){
+            choices ++;
             position[0] -= 1;
             positions.add(position.clone());
         }
-        else if(moveRight()){
+        if(moveRight()){
+            choices ++;
             position[0] += 1;
             positions.add(position.clone());
         }
-        else if(moveUp()){
+        if(moveUp()){
+            choices ++;
             position[1] -= 1;
             positions.add(position.clone());
         }
-        else if(moveDown()){
+        if(moveDown()){
+            choices ++;
             position[1] += 1;
             positions.add(position.clone());
         }
+        if(choices > 1){
+            forks.add(position.clone());
+            System.out.println("FORK DETECTED");
+        }
+
     }
     public ArrayList<int[]> getPositions(){
         while(position[0] != maze[0].length - 1 || position[1] != maze.length - 1){
