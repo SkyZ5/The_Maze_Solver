@@ -34,31 +34,64 @@ public class MazeTraversal {
             choices++;
             down = true;
         }
-        if(moveLeft()){
-            position[0] -= 1;
-            positions.add(position.clone());
-        }
-        else if(moveRight()){
-            position[0] += 1;
-            positions.add(position.clone());
-        }
-        else if(moveUp()){
-            position[1] -= 1;
-            positions.add(position.clone());
-        }
-        else if(moveDown()){
-            position[1] += 1;
-            positions.add(position.clone());
-        }
         if(choices > 1){
-            forks.add(new Fork(position, up, down, left, right));
+            Fork newFork = new Fork(position, up, down, left, right);
+            forks.add(newFork);
             System.out.println("FORK DETECTED");
             System.out.println(Arrays.toString(position));
         }
         if (choices == 0) {
-
+            boolean found = false;
+            while(!found){
+                if(forks.get(forks.size() - 1).deadEnd()){
+                    forks.remove(forks.size() - 1);
+                }
+                else{
+                    found = true;
+                    String path = forks.get(forks.size() - 1).paths();
+                    if(path.equals("up")){
+                        up = true;
+                    }
+                    else if(path.equals("down")){
+                        down = true;
+                    }
+                    else if(path.equals("left")){
+                        left = true;
+                    }
+                    else if(path.equals("right")){
+                        right = true;
+                    }
+                }
+            }
         }
-
+        if(left){
+            if(choices > 1){
+                forks.get(forks.size() - 1).setPathTaken("left");
+            }
+            position[0] -= 1;
+            positions.add(position.clone());
+        }
+        else if(right){
+            if(choices > 1){
+                forks.get(forks.size() - 1).setPathTaken("right");
+            }
+            position[0] += 1;
+            positions.add(position.clone());
+        }
+        else if(up){
+            if(choices > 1){
+                forks.get(forks.size() - 1).setPathTaken("up");
+            }
+            position[1] -= 1;
+            positions.add(position.clone());
+        }
+        else if(down){
+            if(choices > 1){
+                forks.get(forks.size() - 1).setPathTaken("down");
+            }
+            position[1] += 1;
+            positions.add(position.clone());
+        }
     }
     public ArrayList<int[]> getPositions(){
         while(position[0] != maze[0].length - 1 || position[1] != maze.length - 1){
