@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Fork {
     private ArrayList<Fork> parentForks;
@@ -17,6 +18,9 @@ public class Fork {
         this.left = left;
         this.right = right;
     }
+    public String toString(){
+        return "Position: " + Arrays.toString(pos) + "(U,D,L,R): " + up + "," + down + "," + left + "," + right + ",";
+    }
     public void setPathTaken(String path){
         pathTaken = path;
     }
@@ -26,17 +30,26 @@ public class Fork {
     public void addChild(Fork fork){
         childForks.add(fork);
     }
+
+    public int[] getPos() {
+        return pos;
+    }
+
     public String paths(){
         if(up){
+            pathTaken = "up";
             return "up";
         }
         else if(down){
+            pathTaken = "down";
             return "down";
         }
         else if(left){
+            pathTaken = "left";
             return "left";
         }
         else if(right){
+            pathTaken = "right";
             return "right";
         }
         return "";

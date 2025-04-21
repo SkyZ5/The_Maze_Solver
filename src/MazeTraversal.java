@@ -35,34 +35,39 @@ public class MazeTraversal {
             down = true;
         }
         if(choices > 1){
-            Fork newFork = new Fork(position, up, down, left, right);
-            forks.add(newFork);
+            forks.add(new Fork(position.clone(), up, down, left, right));
             System.out.println("FORK DETECTED");
+            System.out.println(forks.get(forks.size() - 1));
             System.out.println(Arrays.toString(position));
         }
         if (choices == 0) {
             boolean found = false;
-            while(!found){
-                if(forks.get(forks.size() - 1).deadEnd()){
+            while(!found) {
+                if (forks.get(forks.size() - 1).deadEnd()) {
                     forks.remove(forks.size() - 1);
+
                 }
-                else{
+                else {
                     found = true;
-                    String path = forks.get(forks.size() - 1).paths();
-                    if(path.equals("up")){
-                        up = true;
-                    }
-                    else if(path.equals("down")){
-                        down = true;
-                    }
-                    else if(path.equals("left")){
-                        left = true;
-                    }
-                    else if(path.equals("right")){
-                        right = true;
-                    }
                 }
             }
+            System.out.println("ran");
+            String path = forks.get(forks.size() - 1).paths();
+            if(path.equals("up")){
+                up = true;
+            }
+            else if(path.equals("down")){
+                down = true;
+            }
+            else if(path.equals("left")){
+                left = true;
+            }
+            else if(path.equals("right")){
+                right = true;
+            }
+            position = forks.get(forks.size() - 1).getPos().clone();
+            positions.add(position.clone());
+            System.out.println(forks);
         }
         if(left){
             if(choices > 1){
@@ -97,20 +102,18 @@ public class MazeTraversal {
         while(position[0] != maze[0].length - 1 || position[1] != maze.length - 1){
             move();
         }
-
         return positions;
     }
-    private boolean moveRight(){
-        if(position[0] != maze[0].length - 1){
+    private boolean moveRight() {
+        if (position[0] != maze[0].length - 1) {
             if (maze[position[1]][position[0] + 1].equals(".")) {
                 int[] temp = position.clone();
                 temp[0] += 1;
-                try{
-                    if(temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1] ){
+                try {
+                    if (temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1]) {
                         return true;
                     }
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     return true;
                 }
             }
@@ -118,54 +121,52 @@ public class MazeTraversal {
         return false;
     }
     private boolean moveLeft(){
-        if(position[0] != 0){
-            if (maze[position[1]][position[0] - 1].equals(".")) {
-                int[] temp = position.clone();
-                temp[0] -= 1;
-                try{
-                    if(temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1]){
+            if (position[0] != 0) {
+                if (maze[position[1]][position[0] - 1].equals(".")) {
+                    int[] temp = position.clone();
+                    temp[0] -= 1;
+                    try {
+
+                        if (temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1]) {
+                            return true;
+                        }
+                    } catch (Exception e) {
                         return true;
                     }
                 }
-                catch(Exception e){
-                    return true;
-                }
             }
-        }
         return false;
     }
     private boolean moveUp(){
-        if(position[1] != 0){
-            if (maze[position[1] - 1][position[0]].equals(".")) {
-                int[] temp = position.clone();
-                temp[1] -= 1;
-                try{
-                    if(temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1]){
+            if (position[1] != 0) {
+                if (maze[position[1] - 1][position[0]].equals(".")) {
+                    int[] temp = position.clone();
+                    temp[1] -= 1;
+                    try {
+                        if (temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1]) {
+                            return true;
+                        }
+                    } catch (Exception e) {
                         return true;
                     }
                 }
-                catch(Exception e){
-                    return true;
-                }
             }
-        }
         return false;
     }
     private boolean moveDown(){
-        if(position[1] != maze.length - 1){
-            if (maze[position[1] + 1][position[0]].equals(".")) {
-                int[] temp = position.clone();
-                temp[1] += 1;
-                try{
-                    if(temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1]){
+            if (position[1] != maze.length - 1) {
+                if (maze[position[1] + 1][position[0]].equals(".")) {
+                    int[] temp = position.clone();
+                    temp[1] += 1;
+                    try {
+                        if (temp[0] != positions.get(positions.size() - 2)[0] || temp[1] != positions.get(positions.size() - 2)[1]) {
+                            return true;
+                        }
+                    } catch (Exception e) {
                         return true;
                     }
                 }
-                catch(Exception e){
-                    return true;
-                }
             }
-        }
         return false;
     }
 }
